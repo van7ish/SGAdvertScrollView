@@ -12,7 +12,6 @@
 //
 
 #import "SGAdvertScrollView.h"
-#import "UIImageView+WebCache.h"
 
 static NSInteger const advertScrollViewTitleFont = 13;
 
@@ -279,22 +278,9 @@ static NSString *const advertScrollViewMoreCell = @"advertScrollViewMoreCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.advertScrollViewStyle == SGAdvertScrollViewStyleMore) {
         SGAdvertScrollViewMoreCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:advertScrollViewMoreCell forIndexPath:indexPath];
-        NSString *topImagePath = self.imageArr[indexPath.item];
-        if ([topImagePath hasPrefix:@"http"]) {
-            [cell.topSignImageView sd_setImageWithURL:[NSURL URLWithString:topImagePath]];
-
-        } else {
-            cell.topSignImageView.image = [UIImage imageNamed:topImagePath];
-        }
+        
         cell.topLabel.text = self.titleArr[indexPath.item];
-
-        NSString *imagePath = self.bottomImageArr[indexPath.item];
-        if ([imagePath hasPrefix:@"http"]) {
-            [cell.bottomSignImageView sd_setImageWithURL:[NSURL URLWithString:imagePath]];
-
-        } else {
-            cell.bottomSignImageView.image = [UIImage imageNamed:imagePath];
-        }
+        
         cell.bottomLabel.text = self.bottomTitleArr[indexPath.item];
 
         if (self.titleFont) {
@@ -312,13 +298,6 @@ static NSString *const advertScrollViewMoreCell = @"advertScrollViewMoreCell";
         
     } else {
         SGAdvertScrollViewNormalCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:advertScrollViewNormalCell forIndexPath:indexPath];
-        NSString *imagePath = self.imageArr[indexPath.item];
-        if ([imagePath hasPrefix:@"http"]) {
-            [cell.signImageView sd_setImageWithURL:[NSURL URLWithString:imagePath]];
-
-        } else {
-            cell.signImageView.image = [UIImage imageNamed:imagePath];
-        }
         
         cell.titleLabel.text = self.titleArr[indexPath.item];
         if (self.textAlignment) {
