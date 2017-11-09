@@ -14,12 +14,10 @@
 #import <UIKit/UIKit.h>
 @class SGAdvertScrollView;
 
-typedef enum : NSUInteger {
-    /// 一行文字滚动样式
+typedef NS_ENUM(NSUInteger, SGAdvertScrollViewStyle) {
     SGAdvertScrollViewStyleNormal,
-    /// 二行文字滚动样式
     SGAdvertScrollViewStyleMore,
-} SGAdvertScrollViewStyle;
+};
 
 @protocol SGAdvertScrollViewDelegate <NSObject>
 /// delegate 方法
@@ -31,11 +29,11 @@ typedef enum : NSUInteger {
 /** delegate */
 @property (nonatomic, weak) id<SGAdvertScrollViewDelegate> delegate;
 /** 默认 SGAdvertScrollViewStyleNormal 样式 */
-@property (nonatomic, assign) SGAdvertScrollViewStyle advertScrollViewStyle;
+@property (nonatomic, assign) IBInspectable SGAdvertScrollViewStyle advertScrollViewStyle;
 /** 滚动时间间隔，默认为3s */
-@property (nonatomic, assign) CFTimeInterval scrollTimeInterval;
+@property (nonatomic, assign) IBInspectable CFTimeInterval scrollTimeInterval;
 /** 标题字体字号，默认为13号字体 */
-@property (nonatomic, strong) UIFont *titleFont;
+@property (nonatomic, strong) IBInspectable UIFont *titleFont;
 
 #pragma mark - - - SGAdvertScrollViewStyleNormal 样式下的 API
 /** 左边标志图片数组 */
@@ -43,9 +41,9 @@ typedef enum : NSUInteger {
 /** 标题数组 */
 @property (nonatomic, strong) NSArray *titles;
 /** 标题字体颜色，默认为黑色 */
-@property (nonatomic, strong) UIColor *titleColor;
+@property (nonatomic, strong) IBInspectable UIColor *titleColor;
 /** 标题文字位置，默认为 NSTextAlignmentLeft，仅仅针对标题起作用 */
-@property (nonatomic, assign) NSTextAlignment textAlignment;
+@property (nonatomic, assign) IBInspectable NSTextAlignment textAlignment;
 
 #pragma mark - - - SGAdvertScrollViewStyleMore 样式下的 API
 /** 顶部左边标志图片数组 */
@@ -57,8 +55,8 @@ typedef enum : NSUInteger {
 /** 底部标题数组 */
 @property (nonatomic, strong) NSArray *bottomTitles;
 /** 顶部标题字体颜色，默认为黑色 */
-@property (nonatomic, strong) UIColor *topTitleColor;
+@property (nonatomic, strong) IBInspectable UIColor *topTitleColor;
 /** 底部标题字体颜色，默认为黑色 */
-@property (nonatomic, strong) UIColor *bottomTitleColor;
+@property (nonatomic, strong) IBInspectable UIColor *bottomTitleColor;
 
 @end
