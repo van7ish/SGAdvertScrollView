@@ -10,6 +10,5 @@ Pod::Spec.new do |s|
     s.source       = {:git => 'https://github.com/kingsic/SGAdvertScrollView.git', :tag => s.version}
     s.source_files = 'SGAdvertScrollView'
     s.requires_arc = true
-    s.dependency "SDWebImage", '~> 4.1.0'
 end
 
