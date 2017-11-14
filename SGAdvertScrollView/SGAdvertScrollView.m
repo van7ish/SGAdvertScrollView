@@ -98,7 +98,7 @@ static NSInteger const advertScrollViewTitleFont = 13;
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    CGFloat spacing = 5;
+    CGFloat spacing = 0;
     
     CGFloat topSignImageViewW = self.topSignImageView.image.size.width;
     CGFloat topSignImageViewH = self.topSignImageView.image.size.height;
@@ -133,7 +133,7 @@ static NSInteger const advertScrollViewTitleFont = 13;
     } else {
         bottomLabelX = CGRectGetMaxX(self.bottomSignImageView.frame) + 0.5 * spacing;
     }
-    CGFloat bottomLabelY = CGRectGetMaxY(self.topLabel.frame);
+    CGFloat bottomLabelY = CGRectGetMaxY(self.topLabel.frame) + 1;
     CGFloat bottomLabelW = self.frame.size.width - bottomLabelX;
     CGFloat bottomLabelH = topLabelH;
     self.bottomLabel.frame = CGRectMake(bottomLabelX, bottomLabelY, bottomLabelW, bottomLabelH);
@@ -224,7 +224,7 @@ static NSString *const advertScrollViewMoreCell = @"advertScrollViewMoreCell";
     _scrollTimeInterval = 3.0;
     
     [self addTimer];
-    _advertScrollViewStyle = SGAdvertScrollViewStyleNormal;
+    _advertScrollViewStyle = SGAdvertScrollViewStyleMore;
 }
 
 - (void)setupSubviews {
@@ -246,7 +246,7 @@ static NSString *const advertScrollViewMoreCell = @"advertScrollViewMoreCell";
         _collectionView.pagingEnabled = YES;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.backgroundColor = [UIColor clearColor];
-        [_collectionView registerClass:[SGAdvertScrollViewNormalCell class] forCellWithReuseIdentifier:advertScrollViewNormalCell];
+        [_collectionView registerClass:[SGAdvertScrollViewMoreCell class] forCellWithReuseIdentifier:advertScrollViewMoreCell];
     }
     return _collectionView;
 }
@@ -282,12 +282,12 @@ static NSString *const advertScrollViewMoreCell = @"advertScrollViewMoreCell";
         cell.topLabel.text = self.titleArr[indexPath.item];
         
         cell.bottomLabel.text = self.bottomTitleArr[indexPath.item];
-
+        
         if (self.titleFont) {
             cell.topLabel.font = self.titleFont;
             cell.bottomLabel.font = self.titleFont;
         }
-
+        
         if (self.topTitleColor) {
             cell.topLabel.textColor = self.topTitleColor;
         }
@@ -322,7 +322,7 @@ static NSString *const advertScrollViewMoreCell = @"advertScrollViewMoreCell";
 #pragma mark - - - NSTimer
 - (void)addTimer {
     [self removeTimer];
-
+    
     self.timer = [NSTimer timerWithTimeInterval:self.scrollTimeInterval target:self selector:@selector(beginUpdateUI) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
 }
@@ -341,7 +341,7 @@ static NSString *const advertScrollViewMoreCell = @"advertScrollViewMoreCell";
     // 马上显示回最中间那组的数据
     NSIndexPath *resetCurrentIndexPath = [NSIndexPath indexPathForItem:currentIndexPath.item inSection:0.5 * advertScrollViewMaxSections];
     [self.collectionView scrollToItemAtIndexPath:resetCurrentIndexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
-
+    
     // 2、计算出下一个需要展示的位置
     NSInteger nextItem = resetCurrentIndexPath.item + 1;
     NSInteger nextSection = resetCurrentIndexPath.section;
@@ -349,9 +349,9 @@ static NSString *const advertScrollViewMoreCell = @"advertScrollViewMoreCell";
         nextItem = 0;
         nextSection++;
     }
-
+    
     NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:nextItem inSection:nextSection];
-
+    
     // 3、通过动画滚动到下一个位置
     [self.collectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
 }
